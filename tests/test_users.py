@@ -40,7 +40,7 @@ def test_create_user_without_data(api_url, headers):
     users.check_response_code(response, 201)
 
 
-def test_creat_user_fails_without_api_key(api_url):
+def test_create_user_fails_without_api_key(api_url):
     response = users.post_verify_users_creation_fails(api_url)
     users.check_response_code(response, 401)
 
