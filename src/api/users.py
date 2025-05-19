@@ -10,7 +10,6 @@ def get_users(api_url, headers, page="2"):
 def get_user_by_id(api_url, headers, name, job, user_id="2"):
     response = requests.get(api_url + f"/api/users/{user_id}", headers=headers)
     body = response.json()
-    print(body)
     assert body["data"]["first_name"] == name
     assert body["data"]["last_name"] == job
     return body
