@@ -7,11 +7,9 @@ def get_users(api_url, headers, page="2"):
     response = requests.get(api_url + f"/api/users/{page}", headers=headers)
     return response
 
-def get_user_by_id(api_url, headers, name, job, user_id="2"):
+def get_user_by_id(api_url, headers, user_id="2"):
     response = requests.get(api_url + f"/api/users/{user_id}", headers=headers)
     body = response.json()
-    assert body["data"]["first_name"] == name
-    assert body["data"]["last_name"] == job
     return body
 
 def get_non_existent_users(api_url, headers, user_id="23"):
@@ -55,8 +53,6 @@ def post_create_users_data_empty(api_url, headers):
 def put_update_users(api_url, headers, name, job, user_id="2"):
     response = requests.put(api_url + f"/api/users/{user_id}", headers=headers, data={"name": name, "job": job})
     body = response.json()
-    assert body["name"] == name
-    assert body["job"] == job
     return response, body
 
 
@@ -64,13 +60,11 @@ def put_update_users(api_url, headers, name, job, user_id="2"):
 def patch_update_user_name(api_url, headers, name, user_id="2"):
     response = requests.patch(api_url + f"/api/users/{user_id}", headers=headers, data={"name": name})
     body = response.json()
-    assert body["name"] == name
     return response, body
 
 def patch_update_user_job(api_url, headers, job, user_id="2"):
     response = requests.patch(api_url + f"/api/users/{user_id}", headers=headers, data={"job": job})
     body = response.json()
-    assert body["job"] == job
     return response, body
 
 # DELETE

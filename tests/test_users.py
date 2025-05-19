@@ -42,24 +42,34 @@ def test_create_user_fails_without_api_key(api_url):
 
 # PUT
 def test_user_put_should_be_update(api_url,headers):
-    users.get_user_by_id(api_url, headers,'Janet','Weaver')
+    user_data = users.get_user_by_id(api_url, headers)
+    assert user_data["data"]["first_name"] == 'Janet'
+    assert user_data["data"]["last_name"] == 'Weaver'
     response, body = users.put_update_users(api_url, headers, 'morpheus', 'test')
     users.check_response_code(response, 200)
+    assert body["name"] == 'morpheus'
+    assert body["job"] == 'test'
     users.check_response_schema(body, schema.put_schema)
 
 
 # PATCH
 def test_user_name_should_be_update(api_url,headers):
-    users.get_user_by_id(api_url, headers, 'Janet', 'Weaver')
+    user_data = users.get_user_by_id(api_url, headers)
+    assert user_data["data"]["first_name"] == 'Janet'
+    assert user_data["data"]["last_name"] == 'Weaver'
     response, body = users.patch_update_user_name(api_url, headers, 'testtest')
     users.check_response_code(response, 200)
+    assert body["name"] == 'testtest'
     users.check_response_schema(body, schema.patch_user_name_schema)
 
 
 def test_user_job_should_be_update(api_url,headers):
-    users.get_user_by_id(api_url, headers, 'Janet', 'Weaver')
+    user_data = users.get_user_by_id(api_url, headers)
+    assert user_data["data"]["first_name"] == 'Janet'
+    assert user_data["data"]["last_name"] == 'Weaver'
     response, body = users.patch_update_user_job(api_url, headers, 'qa')
     users.check_response_code(response, 200)
+    assert body["job"] == 'qa'
     users.check_response_schema(body, schema.patch_user_job_schema)
 
 
