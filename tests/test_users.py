@@ -27,12 +27,16 @@ def test_get_broken_uri_methode(api_url, headers):
 def test_create_user(api_url, headers):
     response, body = users.post_users_should_be_create(api_url, headers, 'morpheus', 'master')
     users.check_response_code(response, 201)
+    assert body["name"] == 'morpheus'
+    assert body["job"] == 'master'
     users.check_response_schema(body, schema.post_users)
 
 
 def test_create_user_without_data(api_url, headers):
-    response = users.post_create_users_data_empty(api_url, headers)
+    response, body = users.post_create_users_data_empty(api_url, headers)
     users.check_response_code(response, 201)
+    assert 'name' not in body
+    assert 'job' not in body
 
 
 def test_create_user_fails_without_api_key(api_url):

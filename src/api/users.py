@@ -31,8 +31,6 @@ def get_incomplete_url(api_url, headers):
 def post_users_should_be_create(api_url, headers, name=str, job=str):
     response = requests.post(api_url + "/api/users", headers=headers, data={"name": name, "job": job})
     body = response.json()
-    assert body["name"] == name
-    assert body["job"] == job
     return response, body
 
 
@@ -44,9 +42,7 @@ def post_verify_users_creation_fails(api_url):
 def post_create_users_data_empty(api_url, headers):
     response = requests.post(api_url + "/api/users", headers=headers, data={})
     body = response.json()
-    assert 'name' not in body
-    assert 'job' not in body
-    return response
+    return response, body
 
 
 # PUT
