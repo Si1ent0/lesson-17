@@ -1,11 +1,6 @@
-import src.schema
+from src.api import users
+from src.schema import users_schema as schema
 
-import src.api.users
-import src.schema.users_schema
-
-
-users = src.api.users
-schema = src.schema.users_schema
 
 # GET
 def test_get_users(api_url, headers):
@@ -47,6 +42,7 @@ def test_create_user_fails_without_api_key(api_url):
 
 # PUT
 def test_user_put_should_be_update(api_url,headers):
+    users.get_user_by_id(api_url, headers,'Janet','Weaver')
     response, body = users.put_update_users(api_url, headers, 'morpheus', 'test')
     users.check_response_code(response, 200)
     users.check_response_schema(body, schema.put_schema)
@@ -54,15 +50,18 @@ def test_user_put_should_be_update(api_url,headers):
 
 # PATCH
 def test_user_name_should_be_update(api_url,headers):
+    users.get_user_by_id(api_url, headers, 'Janet', 'Weaver')
     response, body = users.patch_update_user_name(api_url, headers, 'testtest')
     users.check_response_code(response, 200)
     users.check_response_schema(body, schema.patch_user_name_schema)
 
 
 def test_user_job_should_be_update(api_url,headers):
+    users.get_user_by_id(api_url, headers, 'Janet', 'Weaver')
     response, body = users.patch_update_user_job(api_url, headers, 'qa')
     users.check_response_code(response, 200)
     users.check_response_schema(body, schema.patch_user_job_schema)
+
 
 # DELETE
 def test_delete_user(api_url,headers):
